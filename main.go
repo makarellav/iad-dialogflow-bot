@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
 )
 
 type intent struct {
@@ -115,9 +117,21 @@ func HandleWebhookRequest(w http.ResponseWriter, r *http.Request) {
 func main() {
 	mux := http.NewServeMux()
 
+	err := godotenv.Load()
+
+	if err != nil {
+		fmt.Println("failed to load env")
+	}
+
 	mux.HandleFunc("GET /hello", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("hello"))
 	})
 
-	log.Fatal(http.ListenAndServe(":7777", mux))
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "7777"
+	}
+
+	log.Fatal(http.ListenAndServe("0.0.0.0"+port, mux))
 }
