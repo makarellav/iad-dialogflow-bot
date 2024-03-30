@@ -6,6 +6,7 @@ import (
 	"github.com/makarellav/iad-dialogflow-bot/internal/models"
 	"net/http"
 	"time"
+	_ "time/tzdata"
 )
 
 func (b *bot) getCoin(wr *webhookRequest) (*models.Coin, error) {

@@ -207,6 +207,8 @@ func (b *bot) getCoinHistoryHandler(w http.ResponseWriter, wr *webhookRequest) {
 func (b *bot) webhookRequestHandler(w http.ResponseWriter, r *http.Request) {
 	wr, err := b.readRequest(r)
 
+	b.logger.Info("received request", "req", wr)
+
 	if err != nil {
 		b.errorResponse(w, err)
 
